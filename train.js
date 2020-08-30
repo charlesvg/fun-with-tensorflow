@@ -140,8 +140,8 @@ async function buildObjectDetectionModel() {
 
 (async function main() {
   // Data-related settings.
-  const numCircles = 10;
-  const numLines = 10;
+  const numCircles = 0;
+  const numLines = 0;
 
   const parser = new argparse.ArgumentParser();
   parser.addArgument('--gpu', {

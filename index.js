@@ -99,8 +99,8 @@ async function runAndVisualizeInference(model) {
   const synth = new ObjectDetectionImageSynthesizer(canvas, tf);
 
   const numExamples = 1;
-  const numCircles = 10;
-  const numLineSegments = 10;
+  const numCircles = 0;
+  const numLineSegments = 0;
   const {images, targets} = await synth.generateExampleBatch(
       numExamples, numCircles, numLineSegments);
 
