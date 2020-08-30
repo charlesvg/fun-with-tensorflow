@@ -5,7 +5,7 @@
 * Running on node v12 doesn't seem to work: building the canvas dependency on windows breaks mysteriously
 ## Using the GPU
 * Make sure your GPU is supported and make sure to have the latest drivers
-* [Install Visual Studio 2017 community edition](https://my.visualstudio.com/Downloads?PId=6542) (it has to be 2017 because otherwise CUDA 10.0 won't install)
+* [Install Visual Studio 2017 community edition](https://my.visualstudio.com/Downloads?PId=6542) (it has to be 2017 because otherwise CUDA 10.0 won't install - and it has to be CUDA 10.0 because tfjs seems to have a hardcoded dependency on the exact dll names of CUDA 10.0)
 * Configure node-gyp [to use VS2017](https://github.com/nodejs/node-gyp#option-2)
 * Install CUDA Toolkit 10.0 (exact version) ([see here](https://www.tensorflow.org/install/gpu#windows_setup) and [here](https://github.com/tensorflow/tfjs/blob/master/tfjs-node/README.md))
     * Note: the PATHs to add are slightly different between CUDA 10.0 and CUDA 10.1
