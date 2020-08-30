@@ -1,3 +1,9 @@
+# Some experiments with Tensorflow
+* Based on https://github.com/tensorflow/tfjs-examples/tree/master/simple-object-detection
+
+# Annotation tool
+* Use https://github.com/microsoft/VoTT
+
 # Notes on TF.JS on windows
 * Start with the `simple-object-detection` from the TensorflowJS aka `tfjs` examples
 * The `@tensorflow/tfjs-node` and `@tensorflow/tfjs-node-gpu` dependencies in package json use the outdated `1.3.x` version, upgrade that to `1.7.4`, which is the latest version for node 10.
