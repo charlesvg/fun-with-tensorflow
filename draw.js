@@ -9,7 +9,7 @@ const drawImage = () => {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const radius = 35;
+    const radius = 20;
     const rangeOffset = (radius * 2 + 2);
     const rangeX = (w - rangeOffset);
     const rangeY = (h - rangeOffset);
