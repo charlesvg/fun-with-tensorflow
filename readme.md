@@ -14,9 +14,9 @@
 * [Install Visual Studio 2017 community edition](https://my.visualstudio.com/Downloads?PId=6542) (it has to be 2017 because otherwise CUDA 10.0 won't install - and it has to be CUDA 10.0 because tfjs seems to have a hardcoded dependency on the exact dll names of CUDA 10.0)
 * Configure node-gyp [to use VS2017](https://github.com/nodejs/node-gyp#option-2)
 * Install CUDA Toolkit 10.0 (exact version) ([see here](https://www.tensorflow.org/install/gpu#windows_setup) and [here](https://github.com/tensorflow/tfjs/blob/master/tfjs-node/README.md))
-    * Note: the PATHs to add are slightly different between CUDA 10.0 and CUDA 10.1
+    * Note: the PATHs to add are slightly different between CUDA 10.0 and CUDA 10.1, adapt accordingly
 * Install cuDNN v7.6.5.32 (exact version)
-* Set the environment variable to allow sharing the GPU memory `TF_FORCE_GPU_ALLOW_GROWTH=true` as documented [here](https://www.tensorflow.org/guide/gpu#limiting_gpu_memory_growth)
+* Set the environment variable to allow sharing the GPU memory: `TF_FORCE_GPU_ALLOW_GROWTH=true` as documented [here](https://www.tensorflow.org/guide/gpu#limiting_gpu_memory_growth)
     * You might get the following error otherwise
     
     
