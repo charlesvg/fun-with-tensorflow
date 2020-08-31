@@ -26,14 +26,15 @@ const drawImage = () => {
 
 }
 
-const saveImage = (canvas) => {
+const saveImage = (canvas, cnt) => {
     const fs = require('fs')
-    const out = fs.createWriteStream(__dirname + '/test.jpeg')
+    const out = fs.createWriteStream(__dirname + `/test-${cnt}.jpeg`)
     const stream = canvas.createJPEGStream()
     stream.pipe(out)
     out.on('finish', () => console.log('The JPEG file was created.'))
 }
 
-
-let c = drawImage();
-saveImage(c);
+for (let i=0; i<20; i++) {
+    let c = drawImage();
+    saveImage(c, i);
+}
