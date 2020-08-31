@@ -19,9 +19,8 @@ const fs = require('fs');
 const path = require('path');
 
 const argparse = require('argparse');
-const canvas = require('canvas');
 const tf = require('@tensorflow/tfjs');
-const synthesizer = require('./synthetic_images');
+const {getInputTensors} = require('./sharp');
 
 const CANVAS_SIZE = 200;
 
@@ -116,7 +115,7 @@ function buildNewHead(inputShape) {
   //     shape is a triangle or a rectangle.
   //   - The remaining four units are for bounding-box prediction:
   //     [left, right, top, bottom] in the unit of pixels.
-  newHead.add(tf.layers.dense({units: 5}));
+  newHead.add(tf.layers.dense({units: 4}));
   return newHead;
 }
 
@@ -198,10 +197,10 @@ async function buildObjectDetectionModel() {
 
   const tBegin = tf.util.now();
   console.log(`Generating ${args.numExamples} training examples...`);
-  // const synthDataCanvas = canvas.createCanvas(CANVAS_SIZE, CANVAS_SIZE);
-  const synth =
-      new synthesizer.ObjectDetectionImageSynthesizer(canvas, tf);
-  const {images, targets} = await synth.bla();
+  // const synth =
+  //     new synthesizer.ObjectDetectionImageSynthesizer(canvas, tf);
+  // const {images, targets} = await synth.bla();
+  const {images, targets} = await getInputTensors(tf);
 
   const {model, fineTuningLayers} = await buildObjectDetectionModel();
   model.compile({loss: customLossFunction, optimizer: tf.train.rmsprop(5e-3)});

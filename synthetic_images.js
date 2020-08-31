@@ -79,3 +79,5 @@ class ObjectDetectionImageSynthesizer {
 }
 
 module.exports = {ObjectDetectionImageSynthesizer};
+
+
