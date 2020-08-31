@@ -44,7 +44,6 @@ class ObjectDetectionImageSynthesizer {
             const filename = entry.asset.name;
             const size = entry.asset.size;
             const region = entry.regions[0].boundingBox;
-            console.log(filename, size, region);
 
             const cImage = await this.canvas.loadImage(path.resolve(baseDir, filename));
             const c = this.canvas.createCanvas(size.width, size.height);
@@ -80,10 +79,3 @@ class ObjectDetectionImageSynthesizer {
 }
 
 module.exports = {ObjectDetectionImageSynthesizer};
-
-
-(function () {
-    const tf = require('@tensorflow/tfjs-node');
-    const canvas = require('canvas');
-    new ObjectDetectionImageSynthesizer(canvas, tf).bla();
-})();

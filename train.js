@@ -23,7 +23,7 @@ const canvas = require('canvas');
 const tf = require('@tensorflow/tfjs');
 const synthesizer = require('./synthetic_images');
 
-const CANVAS_SIZE = 224;  // Matches the input size of MobileNet.
+const CANVAS_SIZE = 200;
 
 // Name prefixes of layers that will be unfrozen during fine-tuning.
 const topLayerGroupNames = ['conv_pw_9', 'conv_pw_10', 'conv_pw_11'];
@@ -59,7 +59,7 @@ function customLossFunction(yTrue, yPred) {
     // Scale the the first column (0-1 shape indicator) of `yTrue` in order
     // to ensure balanced contributions to the final loss value
     // from shape and bounding-box predictions.
-    return tf.metrics.meanSquaredError(yTrue.mul(LABEL_MULTIPLIER), yPred);
+    return tf.metrics.meanSquaredError(yTrue, yPred);
   });
 }
 
@@ -198,11 +198,10 @@ async function buildObjectDetectionModel() {
 
   const tBegin = tf.util.now();
   console.log(`Generating ${args.numExamples} training examples...`);
-  const synthDataCanvas = canvas.createCanvas(CANVAS_SIZE, CANVAS_SIZE);
+  // const synthDataCanvas = canvas.createCanvas(CANVAS_SIZE, CANVAS_SIZE);
   const synth =
-      new synthesizer.ObjectDetectionImageSynthesizer(synthDataCanvas, tf);
-  const {images, targets} =
-      await synth.generateExampleBatch(args.numExamples, numCircles, numLines);
+      new synthesizer.ObjectDetectionImageSynthesizer(canvas, tf);
+  const {images, targets} = await synth.bla();
 
   const {model, fineTuningLayers} = await buildObjectDetectionModel();
   model.compile({loss: customLossFunction, optimizer: tf.train.rmsprop(5e-3)});
