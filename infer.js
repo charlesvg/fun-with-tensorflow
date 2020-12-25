@@ -1,17 +1,17 @@
 const tf = require('@tensorflow/tfjs-node');
 const {getTestTensor} = require('./infer-sharp');
+const Jimp = require('jimp');
 
 async function runAndVisualizeInference(model) {
 
-    const {images, targets} = await getTestTensor(tf);
-
+    const {imageTensors, targetTensors, originalImageData} = await getTestTensor(tf);
     const t0 = tf.util.now();
     // Runs inference with the model.
-    const modelOut = await model.predict(images).data();
+    const modelOut = await model.predict(imageTensors).data();
     // inferenceTimeMs.textContent = `${(tf.util.now() - t0).toFixed(1)}`;
 
     // Visualize the true and predicted bounding boxes.
-    const targetsArray = Array.from(await targets.data());
+    const targetsArray = Array.from(await targetTensors.data());
     const predictedBoundingBox = modelOut;
 
     console.log('Expected', targetsArray);
@@ -20,7 +20,14 @@ async function runAndVisualizeInference(model) {
 
 
     // Tensor memory cleanup.
-    tf.dispose([images, targets]);
+    tf.dispose([imageTensors, targetTensors]);
+}
+
+const drawResult = (imageData, targetBoundingBox, predictedBoundingBox) => {
+
+    new Jimp({ data: imageData.data, width: imageData.width, height:imageData.height }, (err, image) => {
+        image.write('2.png');
+    });
 }
 
 async function init() {

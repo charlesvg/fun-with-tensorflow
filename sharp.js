@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const Jimp = require('jimp');
 
-const sharp = require('sharp');
 const dataDirectory = path.resolve(__dirname, './data/vott/target/vott-json-export/');
 
 const CANVAS_SIZE = 224;  // Matches the input size of MobileNet.
@@ -16,17 +15,6 @@ const getTensorForImage = async (tf, imageData, regionBoundingBox)  => {
 }
 
 const getImageData =  async (filename) => {
-    const { data, info } = await sharp(path.resolve(dataDirectory, filename))
-        .resize(CANVAS_SIZE, CANVAS_SIZE, {
-            fit: 'fill',
-        })
-        .raw()
-        .toBuffer({ resolveWithObject: true });
-
-    return {data: data, width: info.width, height: info.height};
-}
-
-const getImageDataJ =  async (filename) => {
     const img = await Jimp.read(path.resolve(dataDirectory, filename));
     img.resize(CANVAS_SIZE, CANVAS_SIZE);
 
@@ -65,12 +53,7 @@ exports.getInputTensors = getInputTensors;
 if (require.main === module) {
     (async () => {
         // const tf = require('@tensorflow/tfjs-node');
-        let data = await getImageDataJ('test-0.jpeg');
-        new Jimp({ data: data.data, width: CANVAS_SIZE, height: CANVAS_SIZE }, (err, image) => {
-            image.write('1.png');
-        });
-
-        data = await getImageData('test-0.jpeg');
+        let data = await getImageData('test-0.jpeg');
         new Jimp({ data: data.data, width: CANVAS_SIZE, height: CANVAS_SIZE }, (err, image) => {
             image.write('2.png');
         });
@@ -78,5 +61,3 @@ if (require.main === module) {
         console.log('done');
     })();
 }
-
-
